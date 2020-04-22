@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.smartproject.plc.dao.AccountDAO">
+
+	<!-- id 중복확인 -->
+ 	<select id="checkid" resultType="int">
+ 		SELECT count(*) FROM account WHERE user_id=#{user_id}
+ 	</select>
+ 	
+ 	<!-- 소속 확인 -->
+ 	<select id="checkfarm" resultType="int">
+ 		SELECT count(*) FROM account WHERE farm_name=#{farm_name}
+ 	</select>
+ 	
+ 	<insert id="insertAccount" parameterType="java.util.HashMap">
+		insert into account(user_id, user_pw, user_name, farm_name, authority, flag) values(#{user_id}, password(#{user_pw}),#{user_name},#{farm_name},#{authority},#{flag})
+	</insert>
+
+	<!-- 로그인 : id, pw 확인 -->
+ 	<select id="loginCheck"  parameterType="java.util.HashMap" resultType="int">
+ 		SELECT count(*) FROM account WHERE user_id=#{user_id} AND user_pw = password(#{user_pw}) 
+ 	</select>
+ 	
+ 	<!-- 접근권한확인(flag) -->
+ 	<select id="flagCheck"  resultType="int">
+ 		SELECT flag FROM account WHERE user_id='${user_id}'
+ 	</select>
+ 	
+ 	<select id="account" resultType="com.smartproject.plc.vo.accountVO" >
+		select user_id, user_pw, user_name, farm_name,authority from account where user_id=#{user_id}
+	</select>
+	
+	<select id="accountList" resultType="com.smartproject.plc.vo.accountVO">
+		select @rownum:=@rownum+1 AS row_number , user_id, user_name, authority, flag from account, (SELECT @rownum := 0) T where farm_name=#{farm_name}
+	</select>
+
+	<update id="permit" parameterType="String">
+		update account set  flag = 1 where user_id = #{user_id}
+	</update>
+	
+	<delete id="deleteAccount">
+		delete from account where user_id = #{user_id}
+	</delete>
+
+</mapper>
