@@ -6,9 +6,9 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
-        <property name="url" value="jdbc:mysql://45.63.121.193:3306/sg?useUnicode=yes&amp;characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC"></property>
-        <property name="username" value="root"></property>
-        <property name="password" value="skm9900"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/sg?useUnicode=yes&amp;characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC"></property>
+        <property name="username" value="username"></property>
+        <property name="password" value="userpw"></property>
     </bean> 
 
 	 <!-- mybatis SqlSessionFactoryBean -->
